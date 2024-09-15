@@ -3,6 +3,13 @@ const categoryContoller=require("../server/category/categoryController")
 const userController=require('../server/user/userController')
 const eventController=require("../server/event/eventController")
 const BookingController=require("../server/booking/BookingController")
+const FeedbackController=require("../server/feedback/FeedbackController")
+const adminDashboard=require("../dashboard/adminDashboard")
+const bookingController = require('../server/booking/BookingControllers');
+
+router.get('/api/bookings', bookingController.getAllBookings);
+
+
 const multer=require("multer")
 
 // category multer
@@ -55,6 +62,17 @@ router.post("/booking/add",BookingController.addingBooking)
 router.post("/booking/getall",BookingController.gettingBooking)
 router.post("/booking/update",BookingController.updateBooking)
 router.post("/booking/singlebook",BookingController.singleBook)
+router.post("/booking/delete",BookingController.deletebooking)
+
+
+
+router.post("/feedback/add",FeedbackController.addFeedback)
+router.post("/feedback/getall",FeedbackController.getallFeedback)
+router.post("/feedback/delete",FeedbackController.deleteFeedback)
+router.post("/feedback/update",FeedbackController.UpdateFeedback)
+
+
+router.post("/admin/dashboard",adminDashboard.adminDash)
 
 
 
@@ -64,7 +82,6 @@ router.post("/booking/singlebook",BookingController.singleBook)
 router.post("/user/register",userController.register)
 router.post("/user/login",userController.login)
 router.post("/user/getall",userController.allGet)
-
 
 
 

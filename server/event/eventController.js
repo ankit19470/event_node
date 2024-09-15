@@ -1,4 +1,5 @@
 const Event=require("./eventModel")
+const Category=require("../category/categoryModel")
 add=(req,res)=>{
     var validationerror=[]
     if(!req.body.eventTitle)
@@ -66,7 +67,7 @@ add=(req,res)=>{
     }
 }
 getall=(req,res)=>{
-    Event.find()
+    Event.find(req.body)
     .populate("categoryId")
     .then(eventdata => {
         res.send({

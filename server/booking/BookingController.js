@@ -182,6 +182,41 @@ singleBook=(req,res)=>{
         })
     }
 }
+deletebooking = (req, res) => {
+    var validationerror = []
+    if (!req.body._id)
+        validationerror.push("id is required")
+    if (validationerror.length > 0) {
+        res.send({
+            status: 404,
+            success: false,
+            message: "validation error",
+            error: validationerror
+        })
+    }
+    else {
+        // delete
+
+        Booking.deleteOne({ _id: req.body._id })
+            .then(bookingdata => {
+                res.send({
+                    status: 200,
+                    success: true,
+                    message: "Department deleted",
+                    data: bookingdata
+                })
+            })
+            .catch(err => {
+                res.send({
+                    status: 500,
+                    success: false,
+                    message: "Internal server error",
+                    error: err.message
+                })
+            })
+
+    }
+}
 module.exports = {
-    addingBooking,gettingBooking,updateBooking,singleBook
+    addingBooking,gettingBooking,updateBooking,singleBook,deletebooking
 }
