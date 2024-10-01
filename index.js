@@ -3,13 +3,17 @@ const app = express()
 const port = 1000
 const Razorpay = require("razorpay")
 const config = require("./config/db")
-const BookingModels=require('./server/booking/BookingModels')
+// const Payment = require('./models/Payment'); // Import the Payment model
+const Payment =require('./models/Payment')
+
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json({ limit: '50mb' }))
 app.use(express.static(__dirname + "/public"))
 
-const cors = require("cors")
-app.use(cors())
+// const cors = require("cors")
+// app.use(cors())
+const cors = require('cors');
+app.use(cors());
 
 const routes = require("./routes/apiRoutes")
 app.use("/api", routes)
@@ -30,20 +34,7 @@ app.get('/home', (req, res) => {
         msg: "default name"
     })
 })
-app.get('/api/bookings', async (req, res) => {
-    const { userId } = req.query; // userId sent as a query parameter
-  
-    try {
-      // Fetch bookings for the specified user
-      const bookings = await BookingModels.find({ userId });
-  
-      // Return the bookings as a JSON response
-      res.status(200).json({ success: true, data: bookings });
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ success: false, message: 'Error fetching bookings' });
-    }
-  });
+
   
 app.post('/order', async (req, res) => {
     const razorpay = new Razorpay({
@@ -94,6 +85,15 @@ app.get("/payment/:paymentId", async (req, res) => {
     } catch (error) {
         res.status(500).send({ error: "Failed to fetch payment details" });
     }
+});
+
+app.get('/payments', async (req, res) => {
+  try {
+    const payments = await Payment.find(); // Fetch payments from MongoDB
+    res.json({ data: payments }); // Send the payment data as JSON
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch payments" });
+  }
 });
 
 

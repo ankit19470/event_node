@@ -6,7 +6,7 @@ const BookingController=require("../server/booking/BookingController")
 const FeedbackController=require("../server/feedback/FeedbackController")
 const adminDashboard=require("../dashboard/adminDashboard")
 const bookingController = require('../server/booking/BookingControllers');
-
+const BookController=require("../server/book/BookController")
 router.get('/api/bookings', bookingController.getAllBookings);
 
 
@@ -75,6 +75,8 @@ router.post("/feedback/update",FeedbackController.UpdateFeedback)
 router.post("/admin/dashboard",adminDashboard.adminDash)
 
 
+router.post("/book/getall",BookController.getallBook)
+router.post("/book/all",BookController.addBook)
 
 
 
