@@ -100,8 +100,8 @@ app.get('/payments', async (req, res) => {
 });
 
 app.get('/', (req, res) => {
-    app.use(express.static(path.resolve(__dirname,"event","build")));
-    res.sendFile(path.resolve(__dirname,"event","build","index.html"));
+    app.use(express.static(path.resolve(__dirname,"fronted","build")));
+    res.sendFile(path.resolve(__dirname,"fronted","build","index.html"));
 });
 app.listen(port, (error) => {
     if (error) {
