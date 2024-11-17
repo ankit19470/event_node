@@ -21,9 +21,12 @@ app.use("/api", routes)
 const seeder = require('./config/seeder')
 seeder.admin()
 
+
 app.get('/', (req, res) => {
-    res.send("welcome to new project")
-})
+    app.use(express.static(path.resolve(__dirname,"fronted","build")));
+    res.sendFile(path.resolve(__dirname,"fronted","build","index.html"));
+});
+
 app.get('/name', (req, res) => {
     res.send("my name is ankit sharma")
 })
@@ -99,10 +102,6 @@ app.get('/payments', async (req, res) => {
   }
 });
 
-app.get('/', (req, res) => {
-    app.use(express.static(path.resolve(__dirname,"fronted","build")));
-    res.sendFile(path.resolve(__dirname,"fronted","build","index.html"));
-});
 app.listen(port, (error) => {
     if (error) {
         console.log('error occured', error);
