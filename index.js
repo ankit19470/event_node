@@ -5,7 +5,7 @@ const Razorpay = require("razorpay")
 const config = require("./config/db")
 // const Payment = require('./models/Payment'); // Import the Payment model
 const Payment =require('./models/Payment')
-
+const path=require("path")
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json({ limit: '50mb' }))
 app.use(express.static(__dirname + "/public"))
@@ -27,6 +27,9 @@ app.get('/', (req, res) => {
 app.get('/name', (req, res) => {
     res.send("my name is ankit sharma")
 })
+
+
+
 app.get('/home', (req, res) => {
     res.send({
         status: 200,
@@ -96,7 +99,10 @@ app.get('/payments', async (req, res) => {
   }
 });
 
-
+app.get('/', (req, res) => {
+    app.use(express.static(path.resolve(__dirname,"event","build")));
+    res.sendFile(path.resolve(__dirname,"event","build","index.html"));
+});
 app.listen(port, (error) => {
     if (error) {
         console.log('error occured', error);
